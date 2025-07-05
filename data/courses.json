@@ -1,0 +1,61 @@
+[
+  {
+    "title": "Basic Cooking Fundamentals",
+    "instructor": "Chef Maria Rodriguez",
+    "duration": "8 weeks",
+    "level": "Beginner",
+    "rating": 4.9,
+    "students": 1247,
+    "price": 299,
+    "image": "https://images.pexels.com/photos/2253643/pexels-photo-2253643.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&dpr=1",
+    "description": "Master the essential cooking techniques, knife skills, and fundamental recipes that every home cook should know.",
+    "longDescription": "This foundational course is perfect for beginners who want to build a strong base in cooking. You'll learn proper knife techniques, understanding of ingredients, basic cooking methods, and essential recipes that form the backbone of great cooking.",
+    "highlights": [
+      "Professional knife skills",
+      "Basic cooking techniques",
+      "Essential recipes",
+      "Food safety",
+      "Kitchen organization",
+      "Ingredient knowledge"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "Kitchen Setup & Knife Skills",
+        "topics": [
+          "Kitchen organization",
+          "Knife types and uses",
+          "Basic cutting techniques",
+          "Safety protocols"
+        ]
+      },
+      {
+        "week": 2,
+        "title": "Cooking Methods & Heat Control",
+        "topics": [
+          "Sautéing",
+          "Roasting",
+          "Braising",
+          "Understanding heat levels"
+        ]
+      }
+    ],
+    "whatYouLearn": [
+      "Professional knife skills and safety",
+      "Essential cooking techniques and methods",
+      "How to build flavors and season properly",
+      "Understanding ingredients and their properties"
+    ],
+    "requirements": [
+      "Basic kitchen equipment (knives, cutting board, pots, pans)",
+      "Access to a stove and oven",
+      "Willingness to practice and learn",
+      "No prior cooking experience required"
+    ],
+    "instructorBio": "Chef Maria Rodriguez has over 15 years of experience in professional kitchens and culinary education.",
+    "instructorImage": "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=1",
+    "id": "1751703982469",
+    "createdAt": "2025-07-05T08:26:22.469Z",
+    "updatedAt": "2025-07-05T08:26:22.469Z"
+  }
+]

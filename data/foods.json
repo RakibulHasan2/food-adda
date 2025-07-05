@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Classic Burger",
+    "category": "Burgers",
+    "image": "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
+    "price": 12.99,
+    "rating": 4.8,
+    "description": "Juicy beef patty with lettuce, tomato, cheese, and our special sauce",
+    "ingredients": [
+      "Beef Patty",
+      "Lettuce",
+      "Tomato",
+      "Cheese",
+      "Special Sauce"
+    ],
+    "id": "1751703982466",
+    "createdAt": "2025-07-05T08:26:22.466Z",
+    "updatedAt": "2025-07-05T08:26:22.466Z"
+  },
+  {
+    "name": "Margherita Pizza",
+    "category": "Pizza",
+    "image": "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
+    "price": 14.99,
+    "rating": 4.9,
+    "description": "Fresh mozzarella, tomato sauce, and basil on crispy thin crust",
+    "ingredients": [
+      "Mozzarella",
+      "Tomato Sauce",
+      "Fresh Basil",
+      "Olive Oil"
+    ],
+    "id": "1751703982467",
+    "createdAt": "2025-07-05T08:26:22.467Z",
+    "updatedAt": "2025-07-05T08:26:22.467Z"
+  },
+  {
+    "name": "Chicken Biryani",
+    "category": "Asian",
+    "image": "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
+    "price": 16.99,
+    "rating": 4.7,
+    "description": "Aromatic basmati rice with tender chicken and traditional spices",
+    "ingredients": [
+      "Basmati Rice",
+      "Chicken",
+      "Saffron",
+      "Spices",
+      "Yogurt"
+    ],
+    "id": "1751703982468",
+    "createdAt": "2025-07-05T08:26:22.468Z",
+    "updatedAt": "2025-07-05T08:26:22.468Z"
+  }
+]
