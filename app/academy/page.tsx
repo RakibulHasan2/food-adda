@@ -1,91 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, Users, Star, Award, BookOpen, ChefHat } from 'lucide-react';
 
+interface Course {
+  id: string;
+  title: string;
+  instructor: string;
+  duration: string;
+  level: string;
+  rating: number;
+  students: number;
+  price: number;
+  image: string;
+  description: string;
+  highlights: string[];
+}
+
 const AcademyPage = () => {
-  const courses = [
-    {
-      id: 1,
-      title: "Basic Cooking Fundamentals",
-      instructor: "Chef Maria Rodriguez",
-      duration: "8 weeks",
-      level: "Beginner",
-      rating: 4.9,
-      students: 1247,
-      price: 299,
-      image: "https://images.pexels.com/photos/2253643/pexels-photo-2253643.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Learn the essential cooking techniques, knife skills, and fundamental recipes that every home cook should know.",
-      highlights: ["Knife skills", "Basic techniques", "Essential recipes", "Food safety"]
-    },
-    {
-      id: 2,
-      title: "Professional Baking & Pastry",
-      instructor: "Chef David Chen",
-      duration: "12 weeks",
-      level: "Intermediate",
-      rating: 4.8,
-      students: 892,
-      price: 449,
-      image: "https://images.pexels.com/photos/1065030/pexels-photo-1065030.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Master the art of baking with professional techniques for breads, pastries, and desserts.",
-      highlights: ["Bread making", "Pastry techniques", "Cake decoration", "Professional methods"]
-    },
-    {
-      id: 3,
-      title: "Asian Cuisine Mastery",
-      instructor: "Chef Akiko Tanaka",
-      duration: "10 weeks",
-      level: "Intermediate",
-      rating: 4.9,
-      students: 634,
-      price: 399,
-      image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Explore the rich flavors and techniques of Asian cuisine from various regions.",
-      highlights: ["Wok cooking", "Noodle making", "Sauce preparation", "Regional specialties"]
-    },
-    {
-      id: 4,
-      title: "Gourmet Cooking Techniques",
-      instructor: "Chef Laurent Dubois",
-      duration: "16 weeks",
-      level: "Advanced",
-      rating: 4.7,
-      students: 423,
-      price: 699,
-      image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Advanced culinary techniques used in high-end restaurants and gourmet cooking.",
-      highlights: ["Molecular gastronomy", "Plating techniques", "Sauce mastery", "Menu development"]
-    },
-    {
-      id: 5,
-      title: "Healthy Cooking & Nutrition",
-      instructor: "Chef Emma Thompson",
-      duration: "6 weeks",
-      level: "Beginner",
-      rating: 4.8,
-      students: 1156,
-      price: 249,
-      image: "https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Learn to create delicious, nutritious meals that support a healthy lifestyle.",
-      highlights: ["Nutritional basics", "Meal planning", "Healthy substitutions", "Special diets"]
-    },
-    {
-      id: 6,
-      title: "Restaurant Management",
-      instructor: "Chef Roberto Silva",
-      duration: "14 weeks",
-      level: "Advanced",
-      rating: 4.6,
-      students: 287,
-      price: 599,
-      image: "https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      description: "Business aspects of running a successful restaurant, from operations to marketing.",
-      highlights: ["Business planning", "Cost control", "Staff management", "Marketing strategies"]
-    }
-  ];
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const teacherFeedback = [
     {
@@ -140,6 +76,37 @@ const AcademyPage = () => {
       rating: 5
     }
   ];
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch('/api/courses');
+      if (response.ok) {
+        const data = await response.json();
+        setCourses(data);
+      } else {
+        console.error('Failed to fetch courses');
+      }
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-red-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading academy courses...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -210,68 +177,78 @@ const AcademyPage = () => {
               <p className="text-xl text-gray-600">Learn from the best chefs in the industry</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {courses.map((course) => (
-                <div key={course.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-                  <div className="relative h-48">
-                    <Image
-                      src={course.image}
-                      alt={course.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
-                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
-                      <span className="text-sm font-medium">{course.rating}</span>
+            {courses.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {courses.map((course) => (
+                  <div key={course.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                    <div className="relative h-48">
+                      <Image
+                        src={course.image}
+                        alt={course.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
+                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                        <span className="text-sm font-medium">{course.rating}</span>
+                      </div>
+                      <div className="absolute top-2 left-2 bg-orange-600 text-white px-2 py-1 rounded-full text-sm font-medium">
+                        {course.level}
+                      </div>
                     </div>
-                    <div className="absolute top-2 left-2 bg-orange-600 text-white px-2 py-1 rounded-full text-sm font-medium">
-                      {course.level}
+                    
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{course.title}</h3>
+                      <p className="text-gray-600 mb-4">{course.description}</p>
+                      
+                      {course.highlights && course.highlights.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-medium text-gray-900 mb-2">Course Highlights:</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {course.highlights.map((highlight, index) => (
+                              <span key={index} className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div className="flex items-center">
+                          <Clock className="w-4 h-4 mr-1" />
+                          <span>{course.duration}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Users className="w-4 h-4 mr-1" />
+                          <span>{course.students} students</span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-sm text-gray-600 mb-4">
+                        <strong>Instructor:</strong> {course.instructor}
+                      </div>
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-2xl font-bold text-orange-600">${course.price}</span>
+                        <Link
+                          href={`/academy/course/${course.id}`}
+                          className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full transition-colors"
+                        >
+                          View Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{course.title}</h3>
-                    <p className="text-gray-600 mb-4">{course.description}</p>
-                    
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-900 mb-2">Course Highlights:</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {course.highlights.map((highlight, index) => (
-                          <span key={index} className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                            {highlight}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                      <div className="flex items-center">
-                        <Clock className="w-4 h-4 mr-1" />
-                        <span>{course.duration}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Users className="w-4 h-4 mr-1" />
-                        <span>{course.students} students</span>
-                      </div>
-                    </div>
-                    
-                    <div className="text-sm text-gray-600 mb-4">
-                      <strong>Instructor:</strong> {course.instructor}
-                    </div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-orange-600">${course.price}</span>
-                      <Link
-                        href={`/academy/course/${course.id}`}
-                        className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full transition-colors"
-                      >
-                        View Details
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <ChefHat className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2">No courses available</h3>
+                <p className="text-gray-600">Check back soon for exciting new courses!</p>
+              </div>
+            )}
           </div>
         </section>
 

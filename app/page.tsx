@@ -3,95 +3,54 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Star, MapPin, Phone, Mail, Clock, Users, Award } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, MapPin, Phone, Mail, Clock, Users, Award, ShoppingCart } from 'lucide-react';
+
+interface FoodItem {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+  price: number;
+  rating: number;
+  description: string;
+  ingredients: string[];
+}
+
+interface Course {
+  id: string;
+  title: string;
+  instructor: string;
+  duration: string;
+  level: string;
+  rating: number;
+  students: number;
+  price: number;
+  image: string;
+  description: string;
+}
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [recentFoods, setRecentFoods] = useState<FoodItem[]>([]);
+  const [drinks, setDrinks] = useState<FoodItem[]>([]);
+  const [meals, setMeals] = useState<FoodItem[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const heroSlides = [
     {
       image: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       title: "Delicious Food, Delivered Fresh",
       subtitle: "Experience the finest cuisine crafted with love and delivered to your doorstep",
-      cta: "Order Now"
+      cta: "Order Now",
+      link: "/foods"
     },
     {
       image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       title: "Master the Art of Cooking",
       subtitle: "Join our Adda Academy and learn from professional chefs",
-      cta: "Explore Courses"
-    }
-  ];
-
-  const recentFoods = [
-    {
-      id: 1,
-      name: "Gourmet Burger",
-      image: "https://images.pexels.com/photos/1639557/pexels-photo-1639557.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$12.99",
-      description: "Juicy beef patty with fresh vegetables and special sauce"
-    },
-    {
-      id: 2,
-      name: "Margherita Pizza",
-      image: "https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$14.99",
-      description: "Fresh mozzarella, tomato sauce, and basil on crispy crust"
-    },
-    {
-      id: 3,
-      name: "Chicken Biryani",
-      image: "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$16.99",
-      description: "Aromatic basmati rice with tender chicken and spices"
-    },
-    {
-      id: 4,
-      name: "Pasta Carbonara",
-      image: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$13.99",
-      description: "Creamy pasta with bacon, eggs, and parmesan cheese"
-    }
-  ];
-
-  const drinks = [
-    {
-      id: 1,
-      name: "Fresh Orange Juice",
-      image: "https://images.pexels.com/photos/96974/pexels-photo-96974.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$4.99",
-      description: "Freshly squeezed orange juice with pulp"
-    },
-    {
-      id: 2,
-      name: "Iced Coffee",
-      image: "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$5.99",
-      description: "Cold brew coffee with ice and cream"
-    },
-    {
-      id: 3,
-      name: "Mango Smoothie",
-      image: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$6.99",
-      description: "Tropical mango smoothie with yogurt"
-    }
-  ];
-
-  const meals = [
-    {
-      id: 1,
-      name: "Family Feast",
-      image: "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$49.99",
-      description: "Complete meal for 4 people with main course, sides, and drinks"
-    },
-    {
-      id: 2,
-      name: "Lunch Special",
-      image: "https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=500&h=300&dpr=1",
-      price: "$18.99",
-      description: "Main dish with rice, salad, and beverage"
+      cta: "Explore Courses",
+      link: "/academy"
     }
   ];
 
@@ -126,6 +85,50 @@ const HomePage = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      // Fetch foods and courses
+      const [foodsResponse, coursesResponse] = await Promise.all([
+        fetch('/api/foods'),
+        fetch('/api/courses')
+      ]);
+
+      if (foodsResponse.ok) {
+        const foodsData = await foodsResponse.json();
+        
+        // Categorize foods
+        const recentFoodsData = foodsData.filter((food: FoodItem) => 
+          ['Burgers', 'Pizza', 'Asian'].includes(food.category)
+        ).slice(0, 4);
+        
+        const drinksData = foodsData.filter((food: FoodItem) => 
+          food.category === 'Drinks'
+        ).slice(0, 3);
+        
+        const mealsData = foodsData.filter((food: FoodItem) => 
+          food.category === 'Combos'
+        ).slice(0, 2);
+
+        setRecentFoods(recentFoodsData);
+        setDrinks(drinksData);
+        setMeals(mealsData);
+      }
+
+      if (coursesResponse.ok) {
+        const coursesData = await coursesResponse.json();
+        setCourses(coursesData.slice(0, 3)); // Show first 3 courses
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   };
@@ -133,6 +136,28 @@ const HomePage = () => {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
+
+  const handleOrder = (item: FoodItem) => {
+    const message = `Hi! I'd like to order ${item.name} for $${item.price}. 
+
+${item.description}
+
+Please let me know the delivery details and estimated time. Thank you!`;
+    
+    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-red-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading delicious content...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -187,9 +212,12 @@ const HomePage = () => {
                 <p className="text-xl md:text-2xl mb-8 animate-fade-in-delay">
                   {slide.subtitle}
                 </p>
-                <button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all transform hover:scale-105 animate-fade-in-delay-2">
+                <Link
+                  href={slide.link}
+                  className="inline-block bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all transform hover:scale-105 animate-fade-in-delay-2"
+                >
                   {slide.cta}
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -231,102 +259,202 @@ const HomePage = () => {
             <p className="text-xl text-gray-600">Discover our latest culinary creations</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {recentFoods.map((food) => (
-              <div key={food.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-                <div className="relative h-48">
-                  <Image
-                    src={food.image}
-                    alt={food.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{food.name}</h3>
-                  <p className="text-gray-600 mb-4">{food.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-orange-600">{food.price}</span>
-                    <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full transition-colors">
-                      Order Now
-                    </button>
+          {recentFoods.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {recentFoods.map((food) => (
+                <div key={food.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                  <div className="relative h-48">
+                    <Image
+                      src={food.image}
+                      alt={food.name}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                      <span className="text-sm font-medium">{food.rating}</span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{food.name}</h3>
+                    <p className="text-gray-600 mb-4">{food.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-bold text-orange-600">${food.price}</span>
+                      <button
+                        onClick={() => handleOrder(food)}
+                        className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-colors"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        Order Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-gray-600">No recent foods available at the moment.</p>
+            </div>
+          )}
         </div>
       </section>
 
       {/* Our Drinks Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-purple-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Drinks</h2>
-            <p className="text-xl text-gray-600">Refresh yourself with our premium beverages</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {drinks.map((drink) => (
-              <div key={drink.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-                <div className="relative h-48">
-                  <Image
-                    src={drink.image}
-                    alt={drink.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{drink.name}</h3>
-                  <p className="text-gray-600 mb-4">{drink.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-blue-600">{drink.price}</span>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors">
-                      Order Now
-                    </button>
+      {drinks.length > 0 && (
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Drinks</h2>
+              <p className="text-xl text-gray-600">Refresh yourself with our premium beverages</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {drinks.map((drink) => (
+                <div key={drink.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                  <div className="relative h-48">
+                    <Image
+                      src={drink.image}
+                      alt={drink.name}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                      <span className="text-sm font-medium">{drink.rating}</span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{drink.name}</h3>
+                    <p className="text-gray-600 mb-4">{drink.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-bold text-blue-600">${drink.price}</span>
+                      <button
+                        onClick={() => handleOrder(drink)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full flex items-center gap-2 transition-colors"
+                      >
+                        <ShoppingCart className="w-4 h-4" />
+                        Order Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Our Meals Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Meals</h2>
-            <p className="text-xl text-gray-600">Complete meals for every occasion</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {meals.map((meal) => (
-              <div key={meal.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-                <div className="relative h-64">
-                  <Image
-                    src={meal.image}
-                    alt={meal.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-2">{meal.name}</h3>
-                  <p className="text-gray-600 mb-4">{meal.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-3xl font-bold text-green-600">{meal.price}</span>
-                    <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full transition-colors">
-                      Order Now
-                    </button>
+      {meals.length > 0 && (
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Meals</h2>
+              <p className="text-xl text-gray-600">Complete meals for every occasion</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {meals.map((meal) => (
+                <div key={meal.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                  <div className="relative h-64">
+                    <Image
+                      src={meal.image}
+                      alt={meal.name}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                      <span className="text-sm font-medium">{meal.rating}</span>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-2xl font-semibold text-gray-900 mb-2">{meal.name}</h3>
+                    <p className="text-gray-600 mb-4">{meal.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-3xl font-bold text-green-600">${meal.price}</span>
+                      <button
+                        onClick={() => handleOrder(meal)}
+                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors"
+                      >
+                        <ShoppingCart className="w-5 h-5" />
+                        Order Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Featured Courses Section */}
+      {courses.length > 0 && (
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-green-50 to-blue-50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Featured Courses</h2>
+              <p className="text-xl text-gray-600">Learn from professional chefs at Adda Academy</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {courses.map((course) => (
+                <div key={course.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                  <div className="relative h-48">
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
+                      <span className="text-sm font-medium">{course.rating}</span>
+                    </div>
+                    <div className="absolute top-2 left-2 bg-orange-600 text-white px-2 py-1 rounded-full text-sm font-medium">
+                      {course.level}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{course.title}</h3>
+                    <p className="text-gray-600 mb-3">{course.description}</p>
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span>{course.duration}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Users className="w-4 h-4 mr-1" />
+                        <span>{course.students} students</span>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-2xl font-bold text-orange-600">${course.price}</span>
+                      <Link
+                        href={`/academy/course/${course.id}`}
+                        className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full transition-colors"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link
+                href="/academy"
+                className="inline-block bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-full font-semibold transition-colors"
+              >
+                View All Courses
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Testimonials Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-50 to-red-50">
