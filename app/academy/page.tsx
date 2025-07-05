@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Clock, Users, Star, Award, BookOpen, ChefHat } from 'lucide-react';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Clock, Users, Star, Award, BookOpen,MapPin, Phone, Mail, ChefHat } from "lucide-react";
 
 interface Course {
   id: string;
@@ -27,54 +27,66 @@ const AcademyPage = () => {
     {
       id: 1,
       name: "Chef Maria Rodriguez",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      message: "Teaching at FoodAdda Academy has been an incredible journey. The students are passionate and eager to learn, making every class a joy to conduct.",
+      image:
+        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      message:
+        "Teaching at FoodAdda Academy has been an incredible journey. The students are passionate and eager to learn, making every class a joy to conduct.",
       specialty: "Italian & Mediterranean Cuisine",
-      experience: "15 years"
+      experience: "15 years",
     },
     {
       id: 2,
       name: "Chef David Chen",
-      image: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      message: "The academy provides excellent facilities and resources. I love seeing students transform from beginners to confident bakers.",
+      image:
+        "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      message:
+        "The academy provides excellent facilities and resources. I love seeing students transform from beginners to confident bakers.",
       specialty: "Pastry & Baking",
-      experience: "12 years"
+      experience: "12 years",
     },
     {
       id: 3,
       name: "Chef Akiko Tanaka",
-      image: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
-      message: "The diversity of students and their enthusiasm for learning Asian cooking techniques is truly inspiring. Each class brings new energy.",
+      image:
+        "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      message:
+        "The diversity of students and their enthusiasm for learning Asian cooking techniques is truly inspiring. Each class brings new energy.",
       specialty: "Asian Fusion",
-      experience: "18 years"
-    }
+      experience: "18 years",
+    },
   ];
 
   const studentFeedback = [
     {
       id: 1,
       name: "Sarah Johnson",
-      image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
       course: "Basic Cooking Fundamentals",
-      message: "This course completely transformed my cooking skills. I went from burning water to preparing restaurant-quality meals for my family!",
-      rating: 5
+      message:
+        "This course completely transformed my cooking skills. I went from burning water to preparing restaurant-quality meals for my family!",
+      rating: 5,
     },
     {
       id: 2,
       name: "Michael Thompson",
-      image: "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
       course: "Professional Baking & Pastry",
-      message: "The hands-on approach and expert guidance helped me start my own bakery. The techniques I learned are invaluable.",
-      rating: 5
+      message:
+        "The hands-on approach and expert guidance helped me start my own bakery. The techniques I learned are invaluable.",
+      rating: 5,
     },
     {
       id: 3,
       name: "Lisa Wang",
-      image: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
+      image:
+        "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=1",
       course: "Asian Cuisine Mastery",
-      message: "As someone with Asian heritage, this course helped me connect with my roots and learn authentic techniques from my grandmother's era.",
-      rating: 5
-    }
+      message:
+        "As someone with Asian heritage, this course helped me connect with my roots and learn authentic techniques from my grandmother's era.",
+      rating: 5,
+    },
   ];
 
   useEffect(() => {
@@ -83,15 +95,15 @@ const AcademyPage = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch('/api/courses');
+      const response = await fetch("/api/courses");
       if (response.ok) {
         const data = await response.json();
         setCourses(data);
       } else {
-        console.error('Failed to fetch courses');
+        console.error("Failed to fetch courses");
       }
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error("Error fetching courses:", error);
     } finally {
       setLoading(false);
     }
@@ -115,20 +127,34 @@ const AcademyPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-orange-600">FoodAdda</Link>
+              <Link href="/" className="text-2xl font-bold text-orange-600">
+                FoodAdda
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Home
                 </Link>
-                <Link href="/foods" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/foods"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Foods
                 </Link>
-                <Link href="/academy" className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium">
+                <Link
+                  href="/academy"
+                  className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
                   Academy
                 </Link>
-                <Link href="/contact" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/contact"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Contact
                 </Link>
               </div>
@@ -149,8 +175,12 @@ const AcademyPage = () => {
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">Adda Academy</h1>
-              <p className="text-xl md:text-2xl mb-8">Master the culinary arts with professional chefs</p>
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                Adda Academy
+              </h1>
+              <p className="text-xl md:text-2xl mb-8">
+                Master the culinary arts with professional chefs
+              </p>
               <div className="flex justify-center space-x-8 text-sm">
                 <div className="flex items-center">
                   <Users className="w-5 h-5 mr-2" />
@@ -173,14 +203,21 @@ const AcademyPage = () => {
         <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Courses</h2>
-              <p className="text-xl text-gray-600">Learn from the best chefs in the industry</p>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Our Courses
+              </h2>
+              <p className="text-xl text-gray-600">
+                Learn from the best chefs in the industry
+              </p>
             </div>
-            
+
             {courses.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {courses.map((course) => (
-                  <div key={course.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                  <div
+                    key={course.id}
+                    className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                  >
                     <div className="relative h-48">
                       <Image
                         src={course.image}
@@ -190,30 +227,39 @@ const AcademyPage = () => {
                       />
                       <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 mr-1" />
-                        <span className="text-sm font-medium">{course.rating}</span>
+                        <span className="text-sm font-medium">
+                          {course.rating}
+                        </span>
                       </div>
                       <div className="absolute top-2 left-2 bg-orange-600 text-white px-2 py-1 rounded-full text-sm font-medium">
                         {course.level}
                       </div>
                     </div>
-                    
+
                     <div className="p-6">
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{course.title}</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                        {course.title}
+                      </h3>
                       <p className="text-gray-600 mb-4">{course.description}</p>
-                      
+
                       {course.highlights && course.highlights.length > 0 && (
                         <div className="mb-4">
-                          <h4 className="text-sm font-medium text-gray-900 mb-2">Course Highlights:</h4>
+                          <h4 className="text-sm font-medium text-gray-900 mb-2">
+                            Course Highlights:
+                          </h4>
                           <div className="flex flex-wrap gap-1">
                             {course.highlights.map((highlight, index) => (
-                              <span key={index} className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                              <span
+                                key={index}
+                                className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full"
+                              >
                                 {highlight}
                               </span>
                             ))}
                           </div>
                         </div>
                       )}
-                      
+
                       <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                         <div className="flex items-center">
                           <Clock className="w-4 h-4 mr-1" />
@@ -224,13 +270,15 @@ const AcademyPage = () => {
                           <span>{course.students} students</span>
                         </div>
                       </div>
-                      
+
                       <div className="text-sm text-gray-600 mb-4">
                         <strong>Instructor:</strong> {course.instructor}
                       </div>
-                      
+
                       <div className="flex justify-between items-center">
-                        <span className="text-2xl font-bold text-orange-600">${course.price}</span>
+                        <span className="text-2xl font-bold text-orange-600">
+                          ${course.price}
+                        </span>
                         <Link
                           href={`/academy/course/${course.id}`}
                           className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-full transition-colors"
@@ -245,8 +293,12 @@ const AcademyPage = () => {
             ) : (
               <div className="text-center py-16">
                 <ChefHat className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">No courses available</h3>
-                <p className="text-gray-600">Check back soon for exciting new courses!</p>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                  No courses available
+                </h3>
+                <p className="text-gray-600">
+                  Check back soon for exciting new courses!
+                </p>
               </div>
             )}
           </div>
@@ -256,13 +308,20 @@ const AcademyPage = () => {
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-100 to-red-100">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Instructors</h2>
-              <p className="text-xl text-gray-600">Learn from industry experts with years of experience</p>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Our Instructors
+              </h2>
+              <p className="text-xl text-gray-600">
+                Learn from industry experts with years of experience
+              </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {teacherFeedback.map((teacher) => (
-                <div key={teacher.id} className="bg-white rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300">
+                <div
+                  key={teacher.id}
+                  className="bg-white rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300"
+                >
                   <div className="flex items-center mb-6">
                     <Image
                       src={teacher.image}
@@ -272,9 +331,15 @@ const AcademyPage = () => {
                       className="rounded-full mr-4"
                     />
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-lg">{teacher.name}</h4>
-                      <p className="text-orange-600 text-sm font-medium">{teacher.specialty}</p>
-                      <p className="text-gray-500 text-sm">{teacher.experience} experience</p>
+                      <h4 className="font-semibold text-gray-900 text-lg">
+                        {teacher.name}
+                      </h4>
+                      <p className="text-orange-600 text-sm font-medium">
+                        {teacher.specialty}
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        {teacher.experience} experience
+                      </p>
                     </div>
                   </div>
                   <p className="text-gray-600 italic">"{teacher.message}"</p>
@@ -288,13 +353,20 @@ const AcademyPage = () => {
         <section className="py-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Student Success Stories</h2>
-              <p className="text-xl text-gray-600">Hear from our graduates who've transformed their culinary skills</p>
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Student Success Stories
+              </h2>
+              <p className="text-xl text-gray-600">
+                Hear from our graduates who've transformed their culinary skills
+              </p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {studentFeedback.map((student) => (
-                <div key={student.id} className="bg-white rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300">
+                <div
+                  key={student.id}
+                  className="bg-white rounded-2xl shadow-lg p-8 transform hover:scale-105 transition-all duration-300"
+                >
                   <div className="flex items-center mb-4">
                     <Image
                       src={student.image}
@@ -304,11 +376,18 @@ const AcademyPage = () => {
                       className="rounded-full mr-4"
                     />
                     <div>
-                      <h4 className="font-semibold text-gray-900">{student.name}</h4>
-                      <p className="text-orange-600 text-sm">{student.course}</p>
+                      <h4 className="font-semibold text-gray-900">
+                        {student.name}
+                      </h4>
+                      <p className="text-orange-600 text-sm">
+                        {student.course}
+                      </p>
                       <div className="flex">
                         {[...Array(student.rating)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                          />
                         ))}
                       </div>
                     </div>
@@ -323,8 +402,13 @@ const AcademyPage = () => {
         {/* Call to Action */}
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-600 to-red-600 text-white">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">Ready to Start Your Culinary Journey?</h2>
-            <p className="text-xl mb-8">Join thousands of students who have transformed their cooking skills with our expert-led courses</p>
+            <h2 className="text-4xl font-bold mb-4">
+              Ready to Start Your Culinary Journey?
+            </h2>
+            <p className="text-xl mb-8">
+              Join thousands of students who have transformed their cooking
+              skills with our expert-led courses
+            </p>
             <div className="flex justify-center space-x-4">
               <Link
                 href="/foods"
@@ -342,6 +426,112 @@ const AcademyPage = () => {
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold text-orange-400 mb-4">
+                FoodAdda
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Delivering delicious food and culinary education to your
+                doorstep.
+              </p>
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">f</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">t</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">i</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/foods"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Foods
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/academy"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Academy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">
+                    123 Food Street, City, State 12345
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <Phone className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">+1 (555) 123-4567</span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">info@foodadda.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Business Hours</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Mon-Fri: 9AM-10PM</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Sat-Sun: 10AM-11PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-300">
+              &copy; 2024 FoodAdda. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

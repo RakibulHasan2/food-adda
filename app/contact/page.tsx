@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Create WhatsApp message
     const message = `Hello FoodAdda Team!
 
@@ -28,24 +28,30 @@ Subject: ${formData.subject}
 Message: ${formData.message}
 
 Thank you!`;
-    
-    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
+
+    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappUrl, "_blank");
+
     // Reset form
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
+      name: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -56,20 +62,34 @@ Thank you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-orange-600">FoodAdda</Link>
+              <Link href="/" className="text-2xl font-bold text-orange-600">
+                FoodAdda
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Home
                 </Link>
-                <Link href="/foods" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/foods"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Foods
                 </Link>
-                <Link href="/academy" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/academy"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Academy
                 </Link>
-                <Link href="/contact" className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium">
+                <Link
+                  href="/contact"
+                  className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
                   Contact
                 </Link>
               </div>
@@ -82,8 +102,13 @@ Thank you!`;
         {/* Header */}
         <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch</h1>
-            <p className="text-xl opacity-90">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              Get In Touch
+            </h1>
+            <p className="text-xl opacity-90">
+              We'd love to hear from you! Send us a message and we'll respond as
+              soon as possible.
+            </p>
           </div>
         </div>
 
@@ -92,16 +117,26 @@ Thank you!`;
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
-              
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+                Contact Information
+              </h2>
+
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="bg-orange-100 p-3 rounded-lg">
                     <MapPin className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Address</h3>
-                    <p className="text-gray-600">123 Food Street<br />Culinary District<br />City, State 12345</p>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Address
+                    </h3>
+                    <p className="text-gray-600">
+                      123 Food Street
+                      <br />
+                      Culinary District
+                      <br />
+                      City, State 12345
+                    </p>
                   </div>
                 </div>
 
@@ -110,7 +145,9 @@ Thank you!`;
                     <Phone className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Phone</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Phone
+                    </h3>
                     <p className="text-gray-600">+1 (555) 123-4567</p>
                     <p className="text-gray-600">+1 (555) 987-6543</p>
                   </div>
@@ -121,7 +158,9 @@ Thank you!`;
                     <Mail className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Email</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Email
+                    </h3>
                     <p className="text-gray-600">info@foodadda.com</p>
                     <p className="text-gray-600">support@foodadda.com</p>
                   </div>
@@ -132,16 +171,24 @@ Thank you!`;
                     <Clock className="w-6 h-6 text-orange-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Business Hours</h3>
-                    <p className="text-gray-600">Monday - Friday: 9:00 AM - 10:00 PM</p>
-                    <p className="text-gray-600">Saturday - Sunday: 10:00 AM - 11:00 PM</p>
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Business Hours
+                    </h3>
+                    <p className="text-gray-600">
+                      Monday - Friday: 9:00 AM - 10:00 PM
+                    </p>
+                    <p className="text-gray-600">
+                      Saturday - Sunday: 10:00 AM - 11:00 PM
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Social Media */}
               <div className="mt-12">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Follow Us</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  Follow Us
+                </h3>
                 <div className="flex space-x-4">
                   <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold hover:bg-orange-700 cursor-pointer transition-colors">
                     f
@@ -161,12 +208,20 @@ Thank you!`;
 
             {/* Contact Form */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Send us a Message</h2>
-              
-              <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg p-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+                Send us a Message
+              </h2>
+
+              <form
+                onSubmit={handleSubmit}
+                className="bg-white rounded-2xl shadow-lg p-8"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Full Name *
                     </label>
                     <input
@@ -180,9 +235,12 @@ Thank you!`;
                       placeholder="Your full name"
                     />
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Email Address *
                     </label>
                     <input
@@ -200,7 +258,10 @@ Thank you!`;
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Phone Number
                     </label>
                     <input
@@ -213,9 +274,12 @@ Thank you!`;
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
                       Subject *
                     </label>
                     <select
@@ -238,7 +302,10 @@ Thank you!`;
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Message *
                   </label>
                   <textarea
@@ -270,9 +337,11 @@ Thank you!`;
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
-              <p className="text-gray-600">Visit our location or get directions</p>
+              <p className="text-gray-600">
+                Visit our location or get directions
+              </p>
             </div>
-            
+
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="aspect-w-16 aspect-h-9 h-96">
                 <iframe
@@ -290,6 +359,111 @@ Thank you!`;
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold text-orange-400 mb-4">
+                FoodAdda
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Delivering delicious food and culinary education to your
+                doorstep.
+              </p>
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">f</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">t</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">i</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/foods"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Foods
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/academy"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Academy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">
+                    123 Food Street, City, State 12345
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <Phone className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">+1 (555) 123-4567</span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">info@foodadda.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Business Hours</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Mon-Fri: 9AM-10PM</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Sat-Sun: 10AM-11PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-300">
+              &copy; 2024 FoodAdda. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

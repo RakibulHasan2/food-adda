@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Search, Filter, ShoppingCart, Star } from 'lucide-react';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Search, Filter, ShoppingCart, Star, MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 
 interface FoodItem {
   id: string;
   name: string;
-  category: 'Burgers' | 'Pizza' | 'Asian' | 'Drinks' | 'Desserts' | 'Combos';
+  category: "Burgers" | "Pizza" | "Asian" | "Drinks" | "Desserts" | "Combos";
   image: string;
   price: number;
   rating: number;
@@ -17,12 +17,20 @@ interface FoodItem {
 }
 
 const FoodsPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [allItems, setAllItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const categories = ['All', 'Burgers', 'Pizza', 'Asian', 'Drinks', 'Desserts', 'Combos'];
+  const categories = [
+    "All",
+    "Burgers",
+    "Pizza",
+    "Asian",
+    "Drinks",
+    "Desserts",
+    "Combos",
+  ];
 
   useEffect(() => {
     fetchFoods();
@@ -30,24 +38,26 @@ const FoodsPage = () => {
 
   const fetchFoods = async () => {
     try {
-      const response = await fetch('/api/foods');
+      const response = await fetch("/api/foods");
       if (response.ok) {
         const data = await response.json();
         setAllItems(data);
       } else {
-        console.error('Failed to fetch foods');
+        console.error("Failed to fetch foods");
       }
     } catch (error) {
-      console.error('Error fetching foods:', error);
+      console.error("Error fetching foods:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredItems = allItems.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
+  const filteredItems = allItems.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -56,12 +66,14 @@ const FoodsPage = () => {
 
 ${item.description}
 
-Ingredients: ${item.ingredients.join(', ')}
+Ingredients: ${item.ingredients.join(", ")}
 
 Please let me know the delivery details and estimated time. Thank you!`;
-    
-    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+
+    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappUrl, "_blank");
   };
 
   if (loading) {
@@ -82,20 +94,34 @@ Please let me know the delivery details and estimated time. Thank you!`;
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-orange-600">FoodAdda</Link>
+              <Link href="/" className="text-2xl font-bold text-orange-600">
+                FoodAdda
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link href="/" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Home
                 </Link>
-                <Link href="/foods" className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium">
+                <Link
+                  href="/foods"
+                  className="text-orange-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
                   Foods
                 </Link>
-                <Link href="/academy" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/academy"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Academy
                 </Link>
-                <Link href="/contact" className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Link
+                  href="/contact"
+                  className="text-gray-900 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >
                   Contact
                 </Link>
               </div>
@@ -109,7 +135,9 @@ Please let me know the delivery details and estimated time. Thank you!`;
         <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Menu</h1>
-            <p className="text-xl opacity-90">Discover delicious food delivered fresh to your door</p>
+            <p className="text-xl opacity-90">
+              Discover delicious food delivered fresh to your door
+            </p>
           </div>
         </div>
 
@@ -128,7 +156,7 @@ Please let me know the delivery details and estimated time. Thank you!`;
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-              
+
               {/* Category Filter */}
               <div className="flex items-center gap-2">
                 <Filter className="h-5 w-5 text-gray-400" />
@@ -137,8 +165,10 @@ Please let me know the delivery details and estimated time. Thank you!`;
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                 >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -151,7 +181,10 @@ Please let me know the delivery details and estimated time. Thank you!`;
           {filteredItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredItems.map((item) => (
-                <div key={item.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+                <div
+                  key={item.id}
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300"
+                >
                   <div className="relative h-48">
                     <Image
                       src={item.image}
@@ -164,32 +197,41 @@ Please let me know the delivery details and estimated time. Thank you!`;
                       <span className="text-sm font-medium">{item.rating}</span>
                     </div>
                   </div>
-                  
+
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-semibold text-gray-900">{item.name}</h3>
+                      <h3 className="text-xl font-semibold text-gray-900">
+                        {item.name}
+                      </h3>
                       <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
                         {item.category}
                       </span>
                     </div>
-                    
+
                     <p className="text-gray-600 mb-4">{item.description}</p>
-                    
+
                     {item.ingredients && item.ingredients.length > 0 && (
                       <div className="mb-4">
-                        <h4 className="text-sm font-medium text-gray-900 mb-2">Ingredients:</h4>
+                        <h4 className="text-sm font-medium text-gray-900 mb-2">
+                          Ingredients:
+                        </h4>
                         <div className="flex flex-wrap gap-1">
                           {item.ingredients.map((ingredient, index) => (
-                            <span key={index} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+                            <span
+                              key={index}
+                              className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
+                            >
                               {ingredient}
                             </span>
                           ))}
                         </div>
                       </div>
                     )}
-                    
+
                     <div className="flex justify-between items-center">
-                      <span className="text-2xl font-bold text-orange-600">${item.price}</span>
+                      <span className="text-2xl font-bold text-orange-600">
+                        ${item.price}
+                      </span>
                       <button
                         onClick={() => handleOrder(item)}
                         className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-full flex items-center gap-2 transition-colors"
@@ -205,17 +247,124 @@ Please let me know the delivery details and estimated time. Thank you!`;
           ) : (
             <div className="text-center py-16">
               <div className="text-gray-400 text-6xl mb-4">🍽️</div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">No items found</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                No items found
+              </h3>
               <p className="text-gray-600">
-                {allItems.length === 0 
+                {allItems.length === 0
                   ? "No food items available at the moment. Please check back later!"
-                  : "Try adjusting your search or filter criteria"
-                }
+                  : "Try adjusting your search or filter criteria"}
               </p>
             </div>
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold text-orange-400 mb-4">
+                FoodAdda
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Delivering delicious food and culinary education to your
+                doorstep.
+              </p>
+              <div className="flex space-x-4">
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">f</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">t</span>
+                </div>
+                <div className="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">i</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/foods"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Foods
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/academy"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Academy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-gray-300 hover:text-orange-400 transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">
+                    123 Food Street, City, State 12345
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <Phone className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">+1 (555) 123-4567</span>
+                </div>
+                <div className="flex items-center">
+                  <Mail className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">info@foodadda.com</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Business Hours</h4>
+              <div className="space-y-2">
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Mon-Fri: 9AM-10PM</span>
+                </div>
+                <div className="flex items-center">
+                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <span className="text-gray-300">Sat-Sun: 10AM-11PM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-300">
+              &copy; 2024 FoodAdda. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
