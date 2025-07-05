@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -260,7 +261,7 @@ Please let me know the delivery details and estimated time. Thank you!`;
           </div>
           
           {recentFoods.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {recentFoods.map((food) => (
                 <div key={food.id} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
                   <div className="relative h-48">
@@ -484,7 +485,7 @@ Please let me know the delivery details and estimated time. Thank you!`;
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 italic">"{testimonial.comment}"</p>
+                <p className="text-gray-600 italic">&quot{testimonial.comment}&quot</p>
               </div>
             ))}
           </div>
